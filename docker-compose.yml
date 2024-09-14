@@ -1,0 +1,78 @@
+# Copyright VMware, Inc.
+# SPDX-License-Identifier: APACHE-2.0
+
+version: '2'
+services:
+  mariadb:
+    image: docker.io/bitnami/mariadb:11.0
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      # - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=mariadb-user
+      - MARIADB_ROOT_PASSWORD=mariadb-root-password
+      - MARIADB_PASSWORD=mariadb-password
+      - MARIADB_DATABASE=bitnami_moodle
+      - MARIADB_CHARACTER_SET=utf8mb4
+      - MARIADB_COLLATE=utf8mb4_unicode_ci
+    volumes:
+      - './mariadb:/bitnami/mariadb'
+    ports:
+      - '3306:3306'
+    networks:
+      - network_final_project
+  
+  phpmyadmin:
+    depends_on:
+      - mariadb
+    image: phpmyadmin:5.2.0-apache
+    ports:
+      - '8090:80'
+    environment:
+      - PMA_ARBITRARY=1
+    networks:
+      - network_final_project
+  
+  moodle:
+    depends_on:
+      - mariadb
+    image: docker.io/bitnami/moodle:4.2
+    ports:
+      - '80:8080'
+      - '443:8443'
+    environment:
+      - MOODLE_DATABASE_HOST=${MOODLE_DATABASE_HOST}
+      - MOODLE_DATABASE_PORT_NUMBER=${MOODLE_DATABASE_PORT_NUMBER}
+      - MOODLE_DATABASE_USER=${MOODLE_DATABASE_USER}
+      - MOODLE_DATABASE_NAME=${MOODLE_DATABASE_NAME}
+      - MOODLE_DATABASE_PASSWORD=${MOODLE_DATABASE_PASSWORD}
+      - MOODLE_USERNAME=${MOODLE_USERNAME}
+      - MOODLE_PASSWORD=${MOODLE_PASSWORD}
+      - MOODLE_EMAIL=${MOODLE_EMAIL}
+      - MOODLE_SITE_NAME=${MOODLE_SITE_NAME}
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=${ALLOW_EMPTY_PASSWORD}
+    
+    volumes:
+      - './moodle:/bitnami/moodle'
+      - './moodle_data:/bitnami/moodledata'
+    networks:
+      - network_final_project
+
+volumes:
+  mariadb:
+    name: mariadb
+    external: true
+    
+  moodle:
+    name: moodle
+    external: true
+
+  moodle_data:
+    name: moodle_data
+    external: true
+
+networks:
+  network_final_project:
+    name: network_final_project
+    driver: bridge
+    
