@@ -8,12 +8,13 @@ services:
     environment:
       # ALLOW_EMPTY_PASSWORD is recommended only for development.
       # - ALLOW_EMPTY_PASSWORD=yes
-      - MARIADB_USER=mariadb-user
-      - MARIADB_ROOT_PASSWORD=mariadb-root-password
-      - MARIADB_PASSWORD=mariadb-password
-      - MARIADB_DATABASE=bitnami_moodle
-      - MARIADB_CHARACTER_SET=utf8mb4
-      - MARIADB_COLLATE=utf8mb4_unicode_ci
+      - MARIADB_USER=${MARIADB_USER}
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+      - MARIADB_DATABASE=${MARIADB_DATABASE}
+      - MARIADB_CHARACTER_SET=${MARIADB_CHARACTER_SET}
+      - MARIADB_COLLATE=${MARIADB_COLLATE}
+      
     volumes:
       - './mariadb:/bitnami/mariadb'
     ports:
@@ -51,7 +52,6 @@ services:
       - MOODLE_SITE_NAME=${MOODLE_SITE_NAME}
       # ALLOW_EMPTY_PASSWORD is recommended only for development.
       - ALLOW_EMPTY_PASSWORD=${ALLOW_EMPTY_PASSWORD}
-    
     volumes:
       - './moodle:/bitnami/moodle'
       - './moodle_data:/bitnami/moodledata'
