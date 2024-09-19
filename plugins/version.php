@@ -26,3 +26,4 @@
 $plugin -> component = "local_vpldatascience";
 $plugin -> version = 2023110600;
 $plugin -> requires = 2023042400; //Moodle 4.2
+$plugin -> lang = "en";

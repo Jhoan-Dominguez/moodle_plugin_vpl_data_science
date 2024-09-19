@@ -23,8 +23,8 @@
  */
 
 function local_vpldatascience_extend_settings_navigation($settingsnav, $context) {
+    
     global $CFG, $PAGE;
-
     // Solo es visible dentro de las páginas del curso
     if (!$PAGE->course or $PAGE->course->id == 1) {
         return;
