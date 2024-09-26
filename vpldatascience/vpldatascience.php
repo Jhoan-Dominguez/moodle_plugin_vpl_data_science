@@ -23,7 +23,7 @@
  */
 
 require_once('../../config.php');
-global $DB, $OUTPUT, $PAGE;
+global $DB, $OUTPUT, $PAGE, $CFG;
 
 // Verifique todas las variables requeridas.
 $courseid = required_param('id', PARAM_INT);
@@ -33,19 +33,12 @@ require_login($courseid);
 $PAGE->set_url('/local/vpldatascience/vpldatascience.php', array('id' => $courseid));
 $PAGE->set_pagelayout('standard');
 
-
 echo $OUTPUT->header();
 
 echo '<script type="module" crossorigin src="/local/vpldatascience/assets/main.js"></script>';
 echo '<link rel="stylesheet" crossorigin href="/local/vpldatascience/assets/style.css">';
 
 echo html_writer::tag('h2',get_string('page_title', 'local_vpldatascience'));
-
-echo html_writer::div(
-    "<button id=\"my-button\">Haz clic aquí</button>",
-    'vpldatascience-app',
-    ['id' => 'vpldatascience-app']
-);
 
 echo html_writer::div(
     "",
