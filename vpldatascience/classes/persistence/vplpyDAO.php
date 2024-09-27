@@ -1,0 +1,10 @@
+
+
+
+vpl_unique_id
+vpl_creation_date
+vpl_update_date
+vpl_course_id
+vpl_course_fullname
+vpl_course_shortname
+vpl_course_idnumber

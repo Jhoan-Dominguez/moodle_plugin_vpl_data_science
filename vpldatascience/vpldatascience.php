@@ -34,16 +34,20 @@ $PAGE->set_url('/local/vpldatascience/vpldatascience.php', array('id' => $course
 $PAGE->set_pagelayout('standard');
 
 echo $OUTPUT->header();
+echo '<script type="module" crossorigin src="/local/vpldatascience/assets/index-BY4ZjSPd.js"></script>';
+echo '<link rel="stylesheet" crossorigin href="/local/vpldatascience/assets/index-CmgDroYx.css">';
 
-echo '<script type="module" crossorigin src="/local/vpldatascience/assets/main.js"></script>';
-echo '<link rel="stylesheet" crossorigin href="/local/vpldatascience/assets/style.css">';
+echo html_writer::tag('h2',get_string('page_title', 'local_vpldatascience'));)
 
-echo html_writer::tag('h2',get_string('page_title', 'local_vpldatascience'));
+$user = $DB->get_record('local_vplpy', ['vpl_unique_id' => '1']);
+echo $user;
+
+$DB->insert_record()
 
 echo html_writer::div(
     "",
-    'app',
-    ['id' => 'app']
+    'my-project',
+    ['id' => 'my-project']
 );
 
 echo $OUTPUT->footer();

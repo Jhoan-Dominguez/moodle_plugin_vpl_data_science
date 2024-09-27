@@ -1,8 +1,6 @@
 
-# rm -r ./moodle/local/vpldatascience/
-# mkdir ./moodle/local/vpldatascience/
-
+rm -r ./moodle/local/vpldatascience/
 rm -r ./vpldatascience/assets/
-docker cp f3b59736fd3c7768863b32f1a3a3e68bfc1a2c6992dbf62eb5065e8d19850427:/home/vue-projects/vpl-data-science/dist/assets/ ./vpldatascience/assets/
 
-# cp ./vpldatascience/ ./moodle/local/vpldatascience/
+docker cp b108ae893970390505e63e20b75dce2d57281fa033c2b04945f350478dfaabeb:/home/vue-projects/vpl-data-science/dist/assets/ ./vpldatascience/assets/
+cp -r ./vpldatascience/ ./moodle/local/
