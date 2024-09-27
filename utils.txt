@@ -40,3 +40,4 @@
 
 
 http://localhost/admin/tool/xmldb/index.php?action=view_xml&file=%2Fadmin%2Ftool%2Fmonitor%2Fdb%2Finstall.xml
+INSERT INTO `mdl_local_vplpy` (`vpl_unique_id`, `vpl_creation_date`, `vpl_update_date`, `vpl_course_id`, `vpl_course_fullname`, `vpl_course_shortname`, `vpl_course_idnumber`) VALUES ('sha_id', '2024-09-27 08:18:43.000000', '2024-09-27 08:18:43.000000', '1', 'test_course', 'test_course', 'sha_number');

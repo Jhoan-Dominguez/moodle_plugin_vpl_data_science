@@ -23,6 +23,8 @@
  */
 
 require_once('../../config.php');
+require_once('classes/logic/vplpy.php');
+
 global $DB, $OUTPUT, $PAGE, $CFG;
 
 // Verifique todas las variables requeridas.
@@ -37,17 +39,18 @@ echo $OUTPUT->header();
 echo '<script type="module" crossorigin src="/local/vpldatascience/assets/index-BY4ZjSPd.js"></script>';
 echo '<link rel="stylesheet" crossorigin href="/local/vpldatascience/assets/index-CmgDroYx.css">';
 
-echo html_writer::tag('h2',get_string('page_title', 'local_vpldatascience'));)
+echo html_writer::tag('h2',get_string('page_title', 'local_vpldatascience'));
 
-$user = $DB->get_record('local_vplpy', ['vpl_unique_id' => '1']);
-echo $user;
+$test_obj = new Vplpy("", "", "", "", "", "", "");
+$response = $test_obj -> query_get_vplpy_id($DB, 2, "test_course");
+$response = json_encode($response);
 
-$DB->insert_record()
+echo $response;
 
 echo html_writer::div(
     "",
     'my-project',
-    ['id' => 'my-project']
+    ['id' => 'my-project', 'test_attr' => $response]
 );
 
 echo $OUTPUT->footer();
