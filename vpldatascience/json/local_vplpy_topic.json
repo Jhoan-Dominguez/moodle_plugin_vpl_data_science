@@ -1,0 +1,27 @@
+[
+    {
+        "vpl_topic_name": "Introduction to Programming",
+        "vpl_topic_description": "A beginner's course covering the fundamentals of programming.",
+        "vpl_topic_lang": "en"
+    },
+    {
+        "vpl_topic_name": "Advanced Data Structures",
+        "vpl_topic_description": "Explore complex data structures and algorithms.",
+        "vpl_topic_lang": "en"
+    },
+    {
+        "vpl_topic_name": "Web Development Fundamentals",
+        "vpl_topic_description": "Learn HTML, CSS, and JavaScript.",
+        "vpl_topic_lang": "en"
+    },
+    {
+        "vpl_topic_name": "Machine Learning Basics",
+        "vpl_topic_description": "An introduction to the world of machine learning.",
+        "vpl_topic_lang": "en"
+    },
+    {
+        "vpl_topic_name": "Database Management Systems",
+        "vpl_topic_description": "Understanding relational and NoSQL databases.",
+        "vpl_topic_lang": "en"
+    }
+]
