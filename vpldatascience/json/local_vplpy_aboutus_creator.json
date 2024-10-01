@@ -1,0 +1,24 @@
+
+[
+    {
+      "vpl_creator_name": "Dra. Ana García",
+      "vpl_creator_rol": "Directora de Investigación",
+      "vpl_creator_description": "Doctora en Química con más de 15 años de experiencia en el desarrollo de simulaciones científicas.  Especializada en la creación de entornos de aprendizaje interactivos.",
+      "vpl_creator_urlimage": "https://example.com/img/ana_garcia.jpg",
+      "vpl_creator_lang": "en"
+    },
+    {
+      "vpl_creator_name": "Juan Pérez",
+      "vpl_creator_rol": "Desarrollador de Software",
+      "vpl_creator_description": "Ingeniero en Sistemas con amplia experiencia en el desarrollo de aplicaciones web y juegos interactivos.  Responsable de la arquitectura y el desarrollo del laboratorio virtual.",
+      "vpl_creator_urlimage": "https://example.com/img/juan_perez.jpg",
+      "vpl_creator_lang": "en"
+    },
+    {
+      "vpl_creator_name": "María Rodriguez",
+      "vpl_creator_rol": "Diseñadora de Interfaz de Usuario (UI/UX)",
+      "vpl_creator_description": "Diseñadora con experiencia en la creación de interfaces de usuario intuitivas y atractivas.  Encargada de la experiencia de usuario en el laboratorio virtual.",
+      "vpl_creator_urlimage": "https://example.com/img/maria_rodriguez.jpg",
+      "vpl_creator_lang": "en"
+    }
+]
