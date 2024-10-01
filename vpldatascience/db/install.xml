@@ -5,10 +5,11 @@
 >
 
     <TABLES>
+
         <!-- local_vplpy_topic  -->
         <TABLE NAME="local_vplpy_topic" COMMENT="Table responsible for storing all types of topics, which can be related to a problem (the topic that is related to the problem must be the most general).">
             <FIELDS>
-                <FIELD NAME="vpl_topic_id" TYPE="char" LENGTH="50" NOTNULL="true"/>
+                <FIELD NAME="vpl_topic_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
                 <FIELD NAME="vpl_topic_name" TYPE="char" LENGTH="50" NOTNULL="true"/>
                 <FIELD NAME="vpl_topic_description" TYPE="char" LENGTH="255" NOTNULL="true"/>
                 <FIELD NAME="vpl_topic_lang" TYPE="char" LENGTH="10" DEFAULT="en" NOTNULL="true"/>
@@ -23,10 +24,11 @@
         <!-- local_vplpy -->
         <TABLE NAME="local_vplpy" COMMENT="Table responsible for storing the general information of the vpl, it allows identifying and differentiating the information of each course, taking into account whether it was modified or not.">
             <FIELDS>
-                <FIELD NAME="vpl_unique_id" TYPE="char" LENGTH="50" NOTNULL="true"/>
+                <FIELD NAME="vpl_unique_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="vpl_exist_default_data" TYPE="char" LENGTH="1" NOTNULL="true" DEFAULT="0"/>
                 <FIELD NAME="vpl_creation_date" TYPE="datetime" NOTNULL="true"/>
                 <FIELD NAME="vpl_update_date" TYPE="datetime" NOTNULL="true"/>
-                <FIELD NAME="vpl_course_id" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0"/>
+                <FIELD NAME="vpl_course_id" TYPE="int" LENGTH="10" NOTNULL="true"/>
                 <FIELD NAME="vpl_course_fullname" TYPE="char" LENGTH="100" NOTNULL="true"/>
                 <FIELD NAME="vpl_course_shortname" TYPE="char" LENGTH="100" NOTNULL="true"/>
                 <FIELD NAME="vpl_course_idnumber" TYPE="char" LENGTH="100" NOTNULL="true"/>
@@ -40,13 +42,13 @@
         <!-- local_vplpy_package  -->
         <TABLE NAME="local_vplpy_package" COMMENT="Table responsible for storing the information corresponding to the personalized library (it is possible to have more than one version, however the most recent one will always be used).">
             <FIELDS>
-                <FIELD NAME="vpl_packg_id" TYPE="char" LENGTH="50" NOTNULL="true"/>
+                <FIELD NAME="vpl_packg_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
                 <FIELD NAME="vpl_packg_name" TYPE="char" LENGTH="50" NOTNULL="true"/>
                 <FIELD NAME="vpl_packg_version" TYPE="char" LENGTH="10" NOTNULL="true"/>
                 <FIELD NAME="vpl_packg_url" TYPE="char" LENGTH="255" NOTNULL="true"/>
                 <FIELD NAME="vpl_packg_creation_date" TYPE="datetime" NOTNULL="true"/>
                 <FIELD NAME="vpl_packg_update_date" TYPE="datetime" NOTNULL="true"/>
-                <FIELD NAME="vpl_unique_id" TYPE="char" LENGTH="50" NOTNULL="true"/>
+                <FIELD NAME="vpl_unique_id" TYPE="int" LENGTH="10" NOTNULL="true"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="vpl_packg_id"/>
@@ -54,10 +56,26 @@
             </KEYS>
         </TABLE>
 
+        <!-- local_vplpy_test  -->
+        <TABLE NAME="local_vplpy_test" COMMENT="Table responsible for storing the information corresponding to testing function (this function validate the code in problem's table)">
+            <FIELDS>
+                <FIELD NAME="vpl_test_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="vpl_test_function_name" TYPE="char" LENGTH="50" NOTNULL="true"/>
+                <FIELD NAME="vpl_test_function_code" TYPE="char" LENGTH="10" NOTNULL="true"/>
+                <FIELD NAME="vpl_test_creation_date" TYPE="datetime" NOTNULL="true"/>
+                <FIELD NAME="vpl_test_update_date" TYPE="datetime" NOTNULL="true"/>
+                <FIELD NAME="vpl_unique_id" TYPE="int" LENGTH="10" NOTNULL="true"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="vpl_test_id"/>
+                <KEY NAME="vpl_unique_key" TYPE="foreign" FIELDS="vpl_unique_id" REFTABLE="local_vplpy" REFFIELDS="vpl_unique_id"/>
+            </KEYS>
+        </TABLE>
+
         <!-- local_vplpy_problem  -->
         <TABLE NAME="local_vplpy_problem" COMMENT="Table responsible for storing the information corresponding to the problems that you want to include in the vpl.">
             <FIELDS>
-                <FIELD NAME="vpl_problem_id" TYPE="char" LENGTH="50" NOTNULL="true"/>
+                <FIELD NAME="vpl_problem_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
                 <FIELD NAME="vpl_problem_name" TYPE="char" LENGTH="100" NOTNULL="true"/>
                 <FIELD NAME="vpl_problem_title" TYPE="char" LENGTH="100" NOTNULL="true"/>
                 <FIELD NAME="vpl_problem_description" TYPE="char" LENGTH="1000" NOTNULL="true"/>
@@ -65,11 +83,13 @@
                 <FIELD NAME="vpl_problem_lang" TYPE="char" LENGTH="10" DEFAULT="en" NOTNULL="true"/>
                 <FIELD NAME="vpl_problem_creation_date" TYPE="datetime" NOTNULL="true"/>
                 <FIELD NAME="vpl_problem_update_date" TYPE="datetime" NOTNULL="true"/>
-                <FIELD NAME="vpl_topic_id" TYPE="char" LENGTH="50" NOTNULL="true"/>
-                <FIELD NAME="vpl_unique_id" TYPE="char" LENGTH="50" NOTNULL="true"/>
+                <FIELD NAME="vpl_test_id" TYPE="int" LENGTH="10" NOTNULL="true"/>
+                <FIELD NAME="vpl_topic_id" TYPE="int" LENGTH="10" NOTNULL="true"/>
+                <FIELD NAME="vpl_unique_id" TYPE="int" LENGTH="10" NOTNULL="true"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="vpl_problem_id"/>
+                <KEY NAME="vpl_test_key" TYPE="foreign" FIELDS="vpl_test_id" REFTABLE="local_vplpy_test" REFFIELDS="vpl_test_id"/>
                 <KEY NAME="vpl_topic_key" TYPE="foreign" FIELDS="vpl_topic_id" REFTABLE="local_vplpy_topic" REFFIELDS="vpl_topic_id"/>
                 <KEY NAME="vpl_unique_key" TYPE="foreign" FIELDS="vpl_unique_id" REFTABLE="local_vplpy" REFFIELDS="vpl_unique_id"/>
             </KEYS>
@@ -78,14 +98,14 @@
         <!-- local_vplpy_home -->
         <TABLE NAME="local_vplpy_home" COMMENT="Table responsible for storing the information corresponding to the vpl home page.">
             <FIELDS>
-                <FIELD NAME="vpl_home_id" TYPE="char" LENGTH="50" NOTNULL="true"/>
+                <FIELD NAME="vpl_home_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
                 <FIELD NAME="vpl_home_title" TYPE="char" LENGTH="50" NOTNULL="true"/>
                 <FIELD NAME="vpl_home_description" TYPE="char" LENGTH="1000" NOTNULL="true"/>
                 <FIELD NAME="vpl_home_footer" TYPE="char" LENGTH="1000" NOTNULL="true"/>
                 <FIELD NAME="vpl_home_lang" TYPE="char" LENGTH="10" DEFAULT="en" NOTNULL="true"/>
                 <FIELD NAME="vpl_home_creation_date" TYPE="datetime" NOTNULL="true"/>
                 <FIELD NAME="vpl_home_update_date" TYPE="datetime" NOTNULL="true"/>
-                <FIELD NAME="vpl_unique_id" TYPE="char" LENGTH="50" NOTNULL="true"/>
+                <FIELD NAME="vpl_unique_id" TYPE="int" LENGTH="10" NOTNULL="true"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="vpl_home_id"/>
@@ -96,14 +116,14 @@
         <!-- local_vplpy_aboutus -->
         <TABLE NAME="local_vplpy_aboutus" COMMENT="Table responsible for storing the information corresponding to the vpl aboutus page.">
             <FIELDS>
-                <FIELD NAME="vpl_aboutus_id" TYPE="char" LENGTH="50" NOTNULL="true"/>
+                <FIELD NAME="vpl_aboutus_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
                 <FIELD NAME="vpl_aboutus_title" TYPE="char" LENGTH="50" NOTNULL="true"/>
                 <FIELD NAME="vpl_aboutus_description" TYPE="char" LENGTH="1000" NOTNULL="true"/>
                 <FIELD NAME="vpl_aboutus_footer" TYPE="char" LENGTH="1000" NOTNULL="true"/>
                 <FIELD NAME="vpl_aboutus_lang" TYPE="char" LENGTH="10" DEFAULT="en" NOTNULL="true"/>
                 <FIELD NAME="vpl_aboutus_creation_date" TYPE="datetime" NOTNULL="true"/>
                 <FIELD NAME="vpl_aboutus_update_date" TYPE="datetime" NOTNULL="true"/>
-                <FIELD NAME="vpl_unique_id" TYPE="char" LENGTH="50" NOTNULL="true"/>
+                <FIELD NAME="vpl_unique_id" TYPE="int" LENGTH="10" NOTNULL="true"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="vpl_aboutus_id"/>
@@ -114,7 +134,7 @@
         <!-- local_vplpy_aboutus_creator -->
         <TABLE NAME="local_vplpy_aboutus_creator" COMMENT="Table in charge of storing the information corresponding to the creators of the vpl plugin.">
             <FIELDS>
-                <FIELD NAME="vpl_creator_id" TYPE="char" LENGTH="50" NOTNULL="true"/>
+                <FIELD NAME="vpl_creator_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
                 <FIELD NAME="vpl_creator_name" TYPE="char" LENGTH="50" NOTNULL="true"/>
                 <FIELD NAME="vpl_creator_rol" TYPE="char" LENGTH="50" NOTNULL="true"/>
                 <FIELD NAME="vpl_creator_description" TYPE="char" LENGTH="1000" NOTNULL="true"/>
@@ -122,7 +142,7 @@
                 <FIELD NAME="vpl_creator_lang" TYPE="char" LENGTH="10" DEFAULT="en" NOTNULL="true"/>
                 <FIELD NAME="vpl_creator_creation_date" TYPE="datetime" NOTNULL="true"/>
                 <FIELD NAME="vpl_creator_update_date" TYPE="datetime" NOTNULL="true"/>
-                <FIELD NAME="vpl_aboutus_id" TYPE="char" LENGTH="50" NOTNULL="true"/>
+                <FIELD NAME="vpl_aboutus_id" TYPE="int" LENGTH="10" NOTNULL="true"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="vpl_creator_id"/>
