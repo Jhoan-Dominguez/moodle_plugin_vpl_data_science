@@ -25,6 +25,3 @@ class VplpyTopicDAO {
         $this -> vpl_topic_update_date = $vpl_topic_update_date;
     }
 }
-
-
-

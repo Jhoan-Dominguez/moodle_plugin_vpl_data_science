@@ -30,8 +30,4 @@ class VplpyAboutusDAO {
         $this -> vpl_aboutus_update_date = $vpl_aboutus_update_date;
         $this -> vpl_unique_id = $vpl_unique_id;
     }
-
-
 }
-
-

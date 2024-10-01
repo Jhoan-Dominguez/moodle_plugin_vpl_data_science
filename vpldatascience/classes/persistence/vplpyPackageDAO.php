@@ -28,12 +28,3 @@ class VplpyPackageDAO {
         $this -> vpl_unique_id = $vpl_unique_id;
     }
 }
-
-
-
-
-
-
-
-
-
