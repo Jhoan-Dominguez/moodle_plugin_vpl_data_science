@@ -22,36 +22,52 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
 defined("MOODLE_INTERNAL") || die;
 
-if ($hassiteconfig) {
+global $DB;
 
-    $settings = new admin_settingpage( 
-        "local_vpldatascience", 
+
+if ($hassiteconfig) {
+    
+    $settings = new admin_settingpage(
+        "local_vpldatascience",
         get_string("setting_vpldatascience", "local_vpldatascience")
     );
     $ADMIN->add( "localplugins", $settings );
 
-
     // Agregar un checkbox para activar el plugin
     $settings->add(
         new admin_setting_configcheckbox(
-            "local_vpldatascience_enabled", 
-            get_string("enable_vpldatascience", "local_vpldatascience"),
-            get_string("enable_vpldatascience_desc", "local_vpldatascience"), 
+            "local_vpldatascience_activatevpl",
+            get_string("setting_vpl_activatevpl_name", "local_vpldatascience"),
+            get_string("setting_vpl_activatevpl_description", "local_vpldatascience"), 
             0)
     );
 
-
-    // Agregar un campo de configuración a la configuración de esta página
+    // Agregar un checkbox para cagar la data por default
     $settings->add(
-        new admin_setting_configtext(
-            "local_vpldatascience_authtoken",
-            get_string("auth_token_vpldatascience", "local_vpldatascience"),
-            get_string("auth_token_vpldatascience_desc", "local_vpldatascience"),
-            get_string("defauth_token_vpldatascience_desc", "local_vpldatascience"),
-            PARAM_STRINGID,
-            30)
+        new admin_setting_configcheckbox(
+            "local_vpldatascience_defaultdata",
+            get_string("setting_vpl_defaultdata_name", "local_vpldatascience"),
+            get_string("setting_vpl_defaultdata_description", "local_vpldatascience"), 
+            0)
     );
+
+    // Selecionar el curso en el cual se quiere colocar el VPL
+    $array_elements = [];
+    $courses_list = get_courses("all", "c.id ASC", "c.id, fullname");
+    foreach($courses_list as $key => $value) {
+        $array_elements += [json_encode($value) => $value->fullname];
+    }
+
+    $settings->add(
+        new admin_setting_configselect(
+            'local_vpldatascience_courses',
+            get_string('setting_vpl_courses_name', 'local_vpldatascience'),
+            get_string('setting_vpl_courses_description', 'local_vpldatascience'),
+            get_string('setting_vpl_courses_defaultvalue', 'local_vpldatascience'),
+            $array_elements
+        )
+    );
+
 }
