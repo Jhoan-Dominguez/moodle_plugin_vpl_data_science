@@ -22,20 +22,22 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-// Configuracion
-$string["plugin_name"] = "VPL Data Science";
-$string["setting_vpldatascience"] = "VPL Data Science";
-$string["enable_vpldatascience"] = "Activar VPL Data Science";
-$string["enable_vpldatascience_desc"] = "Selecciona la casilla para activar el VPL Data Science";
-$string["auth_token_vpldatascience"] = "Token de Autenticacion para el VPL Data Science";
-$string["auth_token_vpldatascience_desc"] = "Ingrese el Token de autenticacion para poder accede al VPL Data Science";
-$string["defauth_token_vpldatascience_desc"] = "Null";
 
+$string["setting_vpldatascience"] = "VPL Data Science";
+
+// Configuracion
+$string["setting_vpl_activatevpl_name"] = "Activar VPL";
+$string["setting_vpl_activatevpl_description"] = "activar el plugin (por defecto el plugin no esta activo)";
+
+$string["setting_vpl_defaultdata_name"] = "Cargar problemas iniciales";
+$string["setting_vpl_defaultdata_description"] = "cargar los problemas del VPL por default (el VPL se incia siempre vacio)";
+
+$string["setting_vpl_courses_defaultvalue"] = "Seleccionar el curso ...";
+$string["setting_vpl_courses_name"] = "Curso";
+$string["setting_vpl_courses_description"] = "Curso en el cual se desea ver usar el VPL";
 
 // Barra de Navegacion
 $string["barnav_option_title"] = "VPL Data Science";
 
 // Elementos de la pagina VPL Data Science
 $string["page_title"] = "VPL Data Science";
-$string["op1"] = "Hola";
-
