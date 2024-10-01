@@ -22,11 +22,17 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+
+require_once($CFG->dirroot . "/local/vpldatascience/utils/common_functions.php");
+require_once($CFG->dirroot . "/local/vpldatascience/classes/logic/vplpy.php");
+
+global $CFG;
+
 function local_vpldatascience_extend_settings_navigation($settingsnav, $context) {
     
-    global $CFG, $PAGE;
+    global $CFG, $PAGE, $DB;
     // Solo es visible dentro de las páginas del curso
-    if (!$PAGE->course or $PAGE->course->id == 1) {
+    if (!$PAGE->course || $PAGE->course->id == 1) {
         return;
     }
 
@@ -40,24 +46,41 @@ function local_vpldatascience_extend_settings_navigation($settingsnav, $context)
     // Solo accesible dentro del menú de administración del curso
     if ($settingnode = $settingsnav->find('courseadmin', navigation_node::TYPE_COURSE)) {
         
-        $strfoo = get_string('barnav_option_title', 'local_vpldatascience');
+        $current_course = $PAGE->course->id;
+        $vpl_navbar_title = get_string('barnav_option_title', 'local_vpldatascience');
         $url = new moodle_url(
-            '/local/vpldatascience/vpldatascience.php', 
-            array('id' => $PAGE->course->id)
-        );
-
-        $foonode = navigation_node::create(
-            $strfoo,
-            $url,
-            navigation_node::NODETYPE_LEAF,
-            'vpldatascience',
-            'vpldatascience',
-            new pix_icon('t/addcontact', $strfoo)
+            '/local/vpldatascience/vpldatascience.php',array('id' => $current_course)
         );
         
-        if ($PAGE->url->compare($url, URL_MATCH_BASE)) {
-            $foonode->make_active();
+        read_json_file("/local/vpldatascience/json/", "local_vplpy_topic.json");
+
+        if (!empty($CFG->local_vpldatascience_activatevpl) &&
+            !empty($CFG->local_vpldatascience_courses)
+            ) {
+                
+                $setting_course = json_decode($CFG->local_vpldatascience_courses);
+
+                if ( $current_course == $setting_course->id){
+                    
+                    $vplpy_obj = new Vplpy();
+                    $vplpy_obj -> start_vplpy($CFG, $DB, $PAGE->course);
+
+                    $vpl_navbar_option = navigation_node::create(
+                        $vpl_navbar_title,
+                        $url,
+                        navigation_node::NODETYPE_LEAF,
+                        'vpldatascience',
+                        'vpldatascience',
+                        new pix_icon('t/addcontact', $vpl_navbar_title)
+                    );
+                    
+                    if ($PAGE->url->compare($url, URL_MATCH_BASE)){
+                        $vpl_navbar_option->make_active();
+                    }
+                    
+                    $settingnode->add_node($vpl_navbar_option);
+                }
+            }
         }
-        $settingnode->add_node($foonode);
+        
     }
-}
