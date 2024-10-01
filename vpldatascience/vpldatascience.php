@@ -22,8 +22,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once('../../config.php');
-require_once('classes/logic/vplpy.php');
+require_once("../../config.php");
+require_once("classes/logic/vplpy.php");
 
 global $DB, $OUTPUT, $PAGE, $CFG;
 
@@ -41,16 +41,12 @@ echo '<link rel="stylesheet" crossorigin href="/local/vpldatascience/assets/inde
 
 echo html_writer::tag('h2',get_string('page_title', 'local_vpldatascience'));
 
-$test_obj = new Vplpy("", "", "", "", "", "", "");
-$response = $test_obj -> query_get_vplpy_id($DB, 2, "test_course");
-$response = json_encode($response);
-
-echo $response;
-
 echo html_writer::div(
     "",
     'my-project',
-    ['id' => 'my-project', 'test_attr' => $response]
+    [
+        "id" => "my-project"
+    ]
 );
 
 echo $OUTPUT->footer();
