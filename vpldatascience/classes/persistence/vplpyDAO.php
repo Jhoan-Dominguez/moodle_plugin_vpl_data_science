@@ -42,5 +42,23 @@ class VplpyDAO {
         );
     }
 
+    public function create_first_row_vplpy($moodle_course): array|bool {
+        
+        $values = new stdClass();
+        $values->vpl_exist_default_data = 0;
+        $values->vpl_creation_date = Date("Y-m-d H:i:s");
+        $values->vpl_update_date = Date("Y-m-d H:i:s");
+        $values->vpl_course_id = $moodle_course->id;
+        $values->vpl_course_fullname = $moodle_course->fullname;
+        $values->vpl_course_shortname = $moodle_course->shortname;
+        $values->vpl_course_idnumber = $moodle_course->idnumber;
+
+        return array(
+            "table_name" => $this->vpl_table_name,
+            "values" => $values,
+        );
+   
+    }
+
 }
 
