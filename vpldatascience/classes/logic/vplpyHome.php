@@ -1,7 +1,6 @@
 <?php
 
-require_once('../../../../config.php');
-global $DB, $OUTPUT, $PAGE, $CFG;
+require_once($CFG->dirroot . "/local/vpldatascience/classes/persistence/vplpyHomeDAO.php");
 
 vpl_home_id
 vpl_home_title

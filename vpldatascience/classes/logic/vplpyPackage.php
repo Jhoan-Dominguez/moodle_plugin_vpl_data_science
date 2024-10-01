@@ -1,7 +1,6 @@
 <?php
 
-require_once('../../../../config.php');
-global $DB, $OUTPUT, $PAGE, $CFG;
+require_once($CFG->dirroot . "/local/vpldatascience/classes/persistence/vplpyPackageDAO.php");
 
 vpl_packg_id
 vpl_packg_name

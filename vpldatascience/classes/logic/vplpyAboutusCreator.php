@@ -1,7 +1,6 @@
 <?php
 
-require_once('../../../../config.php');
-global $DB, $OUTPUT, $PAGE, $CFG;
+require_once($CFG->dirroot . "/local/vpldatascience/classes/persistence/vplpyAboutusCreatorDAO.php");
 
 vpl_creator_id
 vpl_creator_name
