@@ -1,6 +1,7 @@
-
 <?php
-require_once('classes/persistence/vplpyDAO.php');
+
+global $CFG;
+require_once($CFG->dirroot . "/local/vpldatascience/classes/persistence/vplpyDAO.php");
 
 class Vplpy {
     
@@ -57,13 +58,13 @@ class Vplpy {
     }
 
     public function __construct(
-        $vpl_unique_id,
-        $vpl_creation_date,
-        $vpl_update_date,
-        $vpl_course_id,
-        $vpl_course_fullname,
-        $vpl_course_shortname,
-        $vpl_course_idnumber
+        $vpl_unique_id="",
+        $vpl_creation_date="",
+        $vpl_update_date="",
+        $vpl_course_id="",
+        $vpl_course_fullname="",
+        $vpl_course_shortname="",
+        $vpl_course_idnumber=""
     ) {
         
         $this  -> vpl_unique_id = $vpl_unique_id;
@@ -95,6 +96,48 @@ class Vplpy {
         );
 
         return $moodle_db -> get_record_sql($response["query"], $response["values"]);
+    }
+
+    public function create_first_row_vplpy($moodle_db, $moodle_course) {
+        
+        if (empty($moodle_course->id) && empty($moodle_course->fullname) && empty($moodle_course->shorname) &&
+            empty($moodle_course->idnumber)) {return false;}
+        
+        $response = $this -> vplpyDAO -> create_first_row_vplpy($moodle_course);
+
+        try {
+            $transaction = $moodle_db->start_delegated_transaction();
+            $id = $moodle_db->insert_record(
+                $response["table_name"],~
+                $response["values"],
+                true,
+                false
+            );
+            $transaction->allow_commit();
+
+            return $response["values"];
+
+        } catch (Exception $e) {
+            $transaction->rollback($e);
+            return false;
+        }
+    }
+
+    public function start_vplpy($moodle_cfg, $moodle_db, $moodle_course) {
+
+        if (!empty($moodle_cfg->local_vpldatascience_activatevpl) &&
+            !empty($moodle_cfg->local_vpldatascience_courses)) {
+            
+            $vpl_exist = $this -> query_get_vplpy_id($moodle_db, $moodle_course->id, $moodle_course->fullname);
+            
+            if ($vpl_exist) {
+                return $vpl_exist;
+
+            } else {
+                return $this -> create_first_row_vplpy($moodle_db, $moodle_course);
+            }
+        }
+        
     }
 
 
